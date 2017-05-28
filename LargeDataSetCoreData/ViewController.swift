@@ -24,16 +24,16 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return viewModel.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfCities()
+        return viewModel.numberOfEntities(inSection: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = viewModel.cityName(forIndexPath: indexPath)
+        cell.textLabel?.text = viewModel.entityName(forIndePath: indexPath)
         return cell
     }
 

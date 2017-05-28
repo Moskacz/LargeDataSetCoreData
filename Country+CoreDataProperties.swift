@@ -1,5 +1,5 @@
 //
-//  City+CoreDataProperties.swift
+//  Country+CoreDataProperties.swift
 //  LargeDataSetCoreData
 //
 //  Created by Michał Moskała on 26.05.2017.
@@ -10,14 +10,14 @@ import Foundation
 import CoreData
 
 
-extension City {
+extension Country {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<City> {
-        return NSFetchRequest<City>(entityName: entityName())
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Country> {
+        return NSFetchRequest<Country>(entityName: entityName())
     }
     
     @nonobjc public class func entityName() -> String {
-        return "City"
+        return "Country"
     }
 
     @NSManaged public var name: String?

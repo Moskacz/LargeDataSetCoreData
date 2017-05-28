@@ -12,30 +12,34 @@ import CoreData
 class ViewModel {
     
     private let coreDataStack = CoreDataStack()
-    private var frc: NSFetchedResultsController<City>?
+    private var citiesFRC: NSFetchedResultsController<City>?
+    private var countriesFRC: NSFetchedResultsController<Country>?
     
     init() {
         fillDatabaseIfNeeded()
-        setupFRC()
+        setupFRCs()
     }
     
     // MARK: Filling with data
     
     private func fillDatabaseIfNeeded() {
-        guard numberOfEntities() == 0 else {
-            return
+        if savedCitiesCount() == 0 {
+            fillDatabase(withEntityName: City.entityName())
         }
         
-        fillDatabase()
+        if savedCountriesCount() == 0 {
+            fillDatabase(withEntityName: Country.entityName())
+        }
     }
     
-    private func fillDatabase() {
+    private func fillDatabase(withEntityName entityName: String) {
         let context = coreDataStack.persistentContainer.viewContext
-        let entitiesCount = 50000
+        let entitiesCount = 5000
         
         for i in 0..<entitiesCount {
-            let city = NSEntityDescription.insertNewObject(forEntityName: "City", into: context) as! City
-            city.name = "City \(i)"
+            let entity = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context)
+            let value = "\(entityName) \(i)"
+            entity.setValue(value, forKey: "name")
         }
         
         do {
@@ -45,8 +49,17 @@ class ViewModel {
         }
     }
     
-    private func numberOfEntities() -> Int {
+    private func savedCitiesCount() -> Int {
         let fetchRequest: NSFetchRequest<City> = City.fetchRequest()
+        return numberOfEntities(withFetchRequest: fetchRequest)
+    }
+    
+    private func savedCountriesCount() -> Int {
+        let fetchRequest: NSFetchRequest<Country> = Country.fetchRequest()
+        return numberOfEntities(withFetchRequest: fetchRequest)
+    }
+    
+    private func numberOfEntities<T>(withFetchRequest fetchRequest: NSFetchRequest<T>) -> Int {
         fetchRequest.resultType = NSFetchRequestResultType.countResultType
         do {
             let count = try coreDataStack.persistentContainer.viewContext.count(for: fetchRequest)
@@ -59,32 +72,57 @@ class ViewModel {
     
     // MARK: accessing data
     
-    private func setupFRC() {
-        let fetchRequest: NSFetchRequest<City> = City.fetchRequest()
-        let cityNameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [cityNameSortDescriptor]
+    private func setupFRCs() {
+        let citiesFetchRequest: NSFetchRequest<City> = City.fetchRequest()
+        citiesFetchRequest.fetchBatchSize = 50
+        let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        citiesFetchRequest.sortDescriptors = [nameSortDescriptor]
         
-        frc = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                         managedObjectContext: coreDataStack.persistentContainer.viewContext,
-                                         sectionNameKeyPath: nil,
-                                         cacheName: nil)
+        citiesFRC = NSFetchedResultsController(fetchRequest: citiesFetchRequest,
+                                               managedObjectContext: coreDataStack.persistentContainer.viewContext,
+                                               sectionNameKeyPath: nil,
+                                               cacheName: nil)
+        
+        let countriesFetchRequest: NSFetchRequest<Country> = Country.fetchRequest()
+        countriesFetchRequest.fetchBatchSize = 50
+        countriesFetchRequest.sortDescriptors = [nameSortDescriptor]
+        
+        countriesFRC = NSFetchedResultsController(fetchRequest: countriesFetchRequest,
+                                                           managedObjectContext: coreDataStack.persistentContainer.viewContext,
+                                                           sectionNameKeyPath: nil,
+                                                           cacheName: nil)
         
         do {
-            try frc?.performFetch()
+            try citiesFRC?.performFetch()
+            try countriesFRC?.performFetch()
         } catch {
             print("error")
         }
     }
     
-    public func numberOfCities() -> Int {
-        guard let citiesCount = frc?.fetchedObjects?.count else {
-            return 0
-        }
-        
-        return citiesCount
+    public func numberOfSections() -> Int {
+        return 2
     }
     
-    public func cityName(forIndexPath indexPath: IndexPath) -> String? {
-        return frc?.object(at: indexPath).name
+    public func numberOfEntities(inSection section: Int) -> Int {
+        if section == 0 {
+            return citiesFRC?.fetchedObjects?.count ?? 0
+        } else if section == 1 {
+            return countriesFRC?.fetchedObjects?.count ?? 0
+        } else {
+            return 0
+        }
     }
+    
+    public func entityName(forIndePath indexPath: IndexPath) -> String? {
+        if indexPath.section == 0 {
+            return citiesFRC?.object(at: indexPath).name
+        } else if indexPath.section == 1 {
+            let offset = IndexPath(row: indexPath.row, section: indexPath.section - 1)
+            return countriesFRC?.object(at: offset).name
+        } else {
+            return nil
+        }
+    }
+
 }

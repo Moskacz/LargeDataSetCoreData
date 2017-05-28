@@ -17,6 +17,8 @@
 		355584281ED8695C008E57C5 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355584271ED8695C008E57C5 /* ViewModel.swift */; };
 		3555842F1ED86A2A008E57C5 /* City+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555842D1ED86A2A008E57C5 /* City+CoreDataClass.swift */; };
 		355584301ED86A2A008E57C5 /* City+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555842E1ED86A2A008E57C5 /* City+CoreDataProperties.swift */; };
+		355584331ED874E1008E57C5 /* Country+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355584311ED874E1008E57C5 /* Country+CoreDataClass.swift */; };
+		355584341ED874E1008E57C5 /* Country+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355584321ED874E1008E57C5 /* Country+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		355584271ED8695C008E57C5 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		3555842D1ED86A2A008E57C5 /* City+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "City+CoreDataClass.swift"; path = "LargeDataSetCoreData/City+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3555842E1ED86A2A008E57C5 /* City+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "City+CoreDataProperties.swift"; path = "LargeDataSetCoreData/City+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		355584311ED874E1008E57C5 /* Country+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Country+CoreDataClass.swift"; sourceTree = "<group>"; };
+		355584321ED874E1008E57C5 /* Country+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Country+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +52,8 @@
 		355584041ED86794008E57C5 = {
 			isa = PBXGroup;
 			children = (
+				355584311ED874E1008E57C5 /* Country+CoreDataClass.swift */,
+				355584321ED874E1008E57C5 /* Country+CoreDataProperties.swift */,
 				3555842D1ED86A2A008E57C5 /* City+CoreDataClass.swift */,
 				3555842E1ED86A2A008E57C5 /* City+CoreDataProperties.swift */,
 				3555840F1ED86794008E57C5 /* LargeDataSetCoreData */,
@@ -158,7 +164,9 @@
 				355584131ED86794008E57C5 /* ViewController.swift in Sources */,
 				355584191ED86794008E57C5 /* LargeDataSetCoreData.xcdatamodeld in Sources */,
 				355584111ED86794008E57C5 /* AppDelegate.swift in Sources */,
+				355584331ED874E1008E57C5 /* Country+CoreDataClass.swift in Sources */,
 				355584261ED867E2008E57C5 /* CoreDataStack.swift in Sources */,
+				355584341ED874E1008E57C5 /* Country+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
